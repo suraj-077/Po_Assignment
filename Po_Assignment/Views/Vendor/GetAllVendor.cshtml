@@ -11,12 +11,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
-@if (TempData["ErrorMessage"] != null)
-{
-    <script>
-        alert('@Html.Raw(TempData["ErrorMessage"])');
-    </script>
-}
+
 
 <style>
     th, td {
@@ -39,7 +34,7 @@
 <p>
     <a asp-action="AddVendor" class="btn btn-primary">Add New</a>
 </p>
-<table class="table table-striped">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <th>
@@ -84,7 +79,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.AddressLine2)
                 </td>
-                <td>
+                <td >
                     @Html.DisplayFor(modelItem => item.ContactEmail)
                 </td>
                 <td>
@@ -102,7 +97,7 @@
                             <button type="submit" class="btn btn-primary mr-2">Edit</button>
                     </form>
                     &nbsp;&nbsp;
-                    <form asp-controller="Vendor" asp-action="Delete" asp-route-id="@item.Id" method="post">
+                    <form asp-controller="Vendor" asp-action="Delete" asp-route-id="@item.Id" method="get">
                         <button type="submit" class="btn btn-danger ">Delete</button>
                     </form>
                     </div>

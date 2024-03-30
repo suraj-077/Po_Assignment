@@ -9,6 +9,14 @@ namespace Po_Assignment.Dal
         {
             
         }
-        public DbSet<VendorMaster>VendorMasters { get; set; }
+
+        public DbSet<MaterialEntry> MaterialMasters { get; set; }
+
+        public DbSet<VendorMaster> VendorMasters { get; set; }
+
+        public DbSet<Po_Details> PoDetailsMaster { get; set; }
+
+        public DbSet<Po_header> PoHeadersMaster { get; set; }
+
     }
 }

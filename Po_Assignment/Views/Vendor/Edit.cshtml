@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Vendor</title>
+    <title>Edit Vendor</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -26,7 +26,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
-                        <h5 class="mb-0">Add Vendor</h5>
+                        <h5 class="mb-0">Edit Vendor</h5>
                         <div>
                             <button id="saveButton" class="btn btn-primary">Save</button>
                             <a asp-action="GetAllVendor" class="btn btn-danger">Cancel</a>
@@ -35,8 +35,13 @@
                 </div>
                 <div class="card-body">
                     <form id="vendorForm" asp-action="AddVendor" method="post" class="form-horizontal">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <!-- Form fields -->
+                        <div asp-validation-summary="ModelOnly" class="text-d   anger"></div>
+                        <!-- Form fields -->                      
+                            <!-- Hidden input field for ID -->
+
+                        <input type="hidden" asp-for="ContactNo" />
+                        <input type="hidden" asp-for="ContactEmail"/>
+
                         <div class="form-group row">
                             <label asp-for="Code" class="col-sm-3 "></label>
                             <div class="col-sm-4">
@@ -51,11 +56,9 @@
                                 <span style="color:red">*</span>
                             </label>
                             <div class="col-sm-9">
-                                <input asp-for="Name" class="form-control" oninput="ValidateName(this)" type="text" maxlength="50" required />
+                                <input asp-for="Name" class="form-control" id="CheckName" oninput="validateName(this)" required />
                                 <span asp-validation-for="Name" class="text-danger"></span>
-                                <small id="nameLengthWarning" class="text-danger" style="display: none;  font-size: 16px;">Name should not exceed 50 characters.</small>
-                                <small id="nameCharWarning" class="text-danger" style="display: none;  font-size: 16px;">Name should only contain letters and spaces.</small>
-
+                                <span id="nameError" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -64,18 +67,19 @@
                                 <span style="color:red">*</span>
                             </label>
                             <div class="col-sm-9">
-                                <input asp-for="AddressLine1" class="form-control" required />
-                                <span asp-validation-for="AddressLine1" class="text-danger"></span>
+                                <input asp-for="AddressLine1" id="address" oninput="validateAddress(this,'addressLine1Error')" class="form-control" required />
+                                <span id="addressLine1Error" class="text-danger"></span>
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label asp-for="AddressLine2" class="col-sm-3 col-form-label">
                                 Address Line 2
                                 <span style="color:red">*</span>
                             </label>
                             <div class="col-sm-9">
-                                <input asp-for="AddressLine2" class="form-control" required />
-                                <span asp-validation-for="AddressLine2" class="text-danger"></span>
+                                <input asp-for="AddressLine2" id="address2" oninput="validateAddress(this,'addressLine2Error')" class="form-control" required />
+                                <span id="addressLine2Error" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -84,9 +88,9 @@
                                 <span style="color:red">*</span>
                             </label>
                             <div class="col-sm-9">
-                                <input asp-for="ContactEmail" class="form-control" type="email" disabled id="Email" maxlength="50" required />
+                                <input asp-for="ContactEmail" class="form-control" disabled oninput="ValidateEmail(this)" required />
                                 <span asp-validation-for="ContactEmail" class="text-danger"></span>
-                                <span id="emailError" class="text-danger" style="display: none;">Email already exists.</span>
+                                <span id="emailError" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -95,9 +99,9 @@
                                 <span style="color:red">*</span>
                             </label>
                             <div class="col-sm-4">
-                                <input asp-for="ContactNo" class="form-control" id="ContactNo"  disabled  type="text" oninput="validateNo()" required />
+                                <input asp-for="ContactNo" class="form-control" id="ContactNo" disabled type="text" oninput="validateNo(this)" required />
                                 <span asp-validation-for="ContactNo" class="text-danger"></span>
-                                <span id="ContactNoError" class="text-danger" style="display: none; ">Phone no  already exists.</span>
+                                <span id="ContactNoError" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -134,6 +138,10 @@
     }
     <script>
 
+        var isnovalid = true;
+        var addressvalid = true;
+        var isnamevalid = true;
+
 
         var originalFormData;
         window.onload = function ()
@@ -141,41 +149,95 @@
             originalFormData = $("#vendorForm").serialize();
         }
 
-        function ValidateName(input)
-        {
-            var nameWarning = document.getElementById("name");
-            if (input.value.length > 50) {
-                nameWarning.style.display = "block";
+       
+        function validateNo(input) {
+            var contactNo = input.value.trim();
+            const regex = /^\d{0,10}$/;
+
+            var errorMessageSpan = document.getElementById("ContactNoError");
+
+            if (!regex.test(contactNo)) {
+
+                errorMessageSpan.innerText = "Please enter valid number";
+                errorMessageSpan.style.display = 'inline';
+                isnovalid = false;
             } else {
-                nameWarning.style.display = "none";
+
+                errorMessageSpan.style.display = 'none';
+                isnovalid = true;
+            }
+        }
+        function validateAddress(input, fieldName) {
+
+            var address = input.value.trim();
+            const regex = /^[a-zA-Z0-9\s,.'#/-]*$/;
+            var errorMessageSpan = document.getElementById(fieldName);
+
+            if (!regex.test(address)) {
+
+                errorMessageSpan.innerText = "Please enter a valid address.";
+                errorMessageSpan.style.display = 'inline';
+                addressvalid = false;
+            } else {
+
+                errorMessageSpan.style.display = 'none';
+                addressvalid = true;
+            }
+        }
+
+        function validateName(input) {
+            var name = input.value.trim();
+
+            var errorMessageSpan = document.getElementById("nameError");
+
+            // Regular expression to allow only letters
+            var regex = /^[a-zA-Z\s]*$/;
+
+            if (name == " ") {
+                errorMessageSpan.innerText = "this field is reqired";
+                isnamevalid = false
+                return false
+
+            }
+
+            else if (name.length > 20) {
+                errorMessageSpan.innerText = "please input name less than 50 characters";
+                isnamevalid = false
+                return false;
+
+            }
+            else if (!regex.test(name)) {
+                errorMessageSpan.innerText = "Please enter only letters.";
+                errorMessageSpan.style.display = 'inline';
+                isnamevalid=false
+
+            } else {
+                errorMessageSpan.style.display = 'none';
+                isnamevalid=true
             }
         }
 
 
-        window.onload = function ()
-        {
-            var nextCode = 1; // Start with 1
-
-            // Check if there's a stored value for the next code
-            var storedNextCode = localStorage.getItem("nextCode");
-            if (storedNextCode) {
-                nextCode = parseInt(storedNextCode);
-            }
-
-            var formattedCode = "V" + String(nextCode).padStart(3, "0");
-            document.getElementById("code").value = formattedCode;
-
-            // Store the next code value for the next page load
-            nextCode++;
-            localStorage.setItem("nextCode", nextCode);
-        }
 
 
 
 
-        $("#saveButton").click(function (e) 
-        {
+        $("#saveButton").click(function (e) {
             e.preventDefault(); // Prevent the default form submission
+
+           
+
+            $("#ContactNo").prop("disabled", false);
+            $("#ContactEmail").prop("disabled", false);
+            // Serialize the current form data
+            var currentFormData = $("#vendorForm").serialize();
+
+            // Compare the serialized form data with the original form data
+            if (currentFormData === originalFormData) {
+                alert("No changes made.");
+                return;
+            }
+
             var formValid = true;
             $("#vendorForm input[type='text'],input[type='email'],input[type='number'],input[type='date'], #vendorForm textarea").each(function () {
                 if ($(this).val().trim() === "") {
@@ -189,7 +251,6 @@
                 return; // Exit the function
             }
 
-
             var contactNo = $("#ContactNo").val().trim();
             const regex = /^\d{10}$/;
 
@@ -197,21 +258,29 @@
                 alert("Please enter a valid contact number.");
                 return;
             }
-
-           
             var formData = $("#vendorForm").serialize();
+          
+            debugger;
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("Edit", "Vendor")",
                 data: formData,
                 success: function (response) {
-                    alert("Vendor details updated successfully");
-                    window.location.href = "@Url.Action("GetAllVendor", "Vendor")";
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Vendor details updated Successfully',
+                        showConfirmButton: false,
+                        timer: 2000 // Close the alert after 3 seconds
+                    }).then(function () {
+                        // Redirect to the index page or perform any other action
+                        window.location.href = '/Vendor/GetAllVendor';
+                    });
                 },
                 error: function (xhr, status, error) {
                     console.error(error);
                 }
             });
+
         });
     </script>
 }

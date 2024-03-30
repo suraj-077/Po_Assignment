@@ -10,11 +10,17 @@
 <body>
     <h1>Error</h1>
     <p>An error occurred while processing your request.</p>
-    <p>Please try again later or contact support for assistance.</p>
     @* Display additional information about the error if available *@
     @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
     {
         <p>Error message: @Html.Raw(ViewData["ErrorMessage"])</p>
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.error))
+    {
+        <div class="alert alert-danger">
+            @ViewBag.error
+        </div>
     }
 </body>
 </html>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Po_Assignment.Dal;
 using Po_Assignment.Models;
@@ -14,6 +15,7 @@ namespace Po_Assignment.Controllers
             this._context = _context;
 
         }
+
         [HttpGet]
 
         //return list of all vendors
@@ -22,7 +24,7 @@ namespace Po_Assignment.Controllers
             var data = _context.VendorMasters;
             if (data == null)
             {
-                return NotFound();
+                return BadRequest();
             }
             else
             {
@@ -33,7 +35,7 @@ namespace Po_Assignment.Controllers
         [HttpPost]
 
         //add new vendor
-        public ActionResult AddVendor(VendorMaster vendor)
+        public IActionResult AddVendor(VendorMaster vendor)
         {
             
             if(ModelState.IsValid)
@@ -48,7 +50,7 @@ namespace Po_Assignment.Controllers
             }
             else
             {
-                return NotFound();
+                return BadRequest(ModelState);
 
             }
 
@@ -86,7 +88,7 @@ namespace Po_Assignment.Controllers
         {
             if(Id<0)
             {
-                return NotFound("invalid request");
+                return BadRequest();
             }
            
             VendorMaster data = _context.VendorMasters.FirstOrDefault(a => a.Id==Id);
@@ -103,21 +105,23 @@ namespace Po_Assignment.Controllers
         {
             if (id != vendorMaster.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            if (ModelState.IsValid)
-            {
-               
-                    _context.Update(vendorMaster);
-                    _context.SaveChanges();
+            _context.VendorMasters.Update(vendorMaster);
+            _context.SaveChanges();
 
-                   // TempData["SuccessMessage"] = "Vendor details updated successfully!";
-                    return RedirectToAction("GetAllVendor");
-                
-            }
+            // TempData["SuccessMessage"] = "Vendor details updated successfully!";
+            return RedirectToAction("GetAllVendor");
+        }
 
-            return View(vendorMaster);
+
+        [HttpGet]
+        public IActionResult Delete(int Id)
+        {
+            var vendor=_context.VendorMasters.Find(Id);
+
+            return View(vendor);
         }
 
         [HttpPost]
@@ -126,19 +130,19 @@ namespace Po_Assignment.Controllers
         {
             if (Id < 0)
             {
-                return NotFound();
+                return BadRequest();
             }  
 
             VendorMaster data = _context.VendorMasters.Find(Id);
 
             if (data == null)
             {
-                return NotFound();
+                return BadRequest();
             }
+
             string name=data.Code;
             _context.VendorMasters.Remove(data);
-            _context.SaveChanges();
-           TempData["ErrorMessage"] = $"Vendor {name} deleted successfully!"; 
+            _context.SaveChanges();        
 
             return RedirectToAction("GetAllVendor");
         }

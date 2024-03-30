@@ -38,7 +38,7 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <!-- Form fields -->
                         <div class="form-group row">
-                            <label asp-for="Code" class="col-sm-3 "></label>
+                            <label asp-for="Code" class="col-sm-3 ">Code:</label>
                             <div class="col-sm-4">
                                 <input asp-for="Code" id="code" class="form-control" value="@ViewBag.Code" readonly />
                                 <span asp-validation-for="Code" class="text-danger"></span>
@@ -51,9 +51,9 @@
                                 <span style="color:red">*</span>
                             </label>
                             <div class="col-sm-9">
-                                <input asp-for="Name" class="form-control" id="CheckName" oninput="ValidateName(this)" type="text" required />
+                                <input asp-for="Name" class="form-control" id="CheckName" oninput="validateName(this)" required />
                                 <span asp-validation-for="Name" class="text-danger"></span>
-                                <span id="name" class="text-danger"></span>
+                                <span id="nameError" class="text-danger"></span>
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@
                                 <span style="color:red">*</span>
                             </label>
                             <div class="col-sm-9">
-                                <input asp-for="AddressLine1" id="address" oninput="validateAddress(this," addressLine1Error")" class="form-control" required />
+                                <input asp-for="AddressLine1" id="address" oninput="validateAddress(this,'addressLine1Error')" class="form-control" required />
                                 <span id="addressLine1Error" class="text-danger"></span>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                                 <span style="color:red">*</span>
                             </label>
                             <div class="col-sm-9">
-                                <input asp-for="AddressLine2" id="address2" oninput="validateAddress(this,"addressLine2Error") class="form-control" required />
+                                <input asp-for="AddressLine2" id="address2" oninput="validateAddress(this,'addressLine2Error')" class="form-control" required />
                                 <span id="addressLine2Error" class="text-danger"></span>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                                 <span style="color:red">*</span>
                             </label>
                             <div class="col-sm-9">
-                                <input asp-for="ContactEmail" class="form-control" type="email" id="Email" oninput="ValidateEmail()" maxlength="50" required />
+                                <input asp-for="ContactEmail" class="form-control" id="Email" type="email" required />
                                 <span asp-validation-for="ContactEmail" class="text-danger"></span>
                                 <span id="emailError" class="text-danger"></span>
                             </div>
@@ -128,7 +128,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	
-	
 </body>
 </html>
 
@@ -137,6 +136,10 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
    <script>
+
+        var isnovalid = true;
+        var addressvalid = true;
+        var isnamevalid = true;
 
         function validateNo(input) {
             var contactNo = input.value.trim();
@@ -148,47 +151,76 @@
 
                 errorMessageSpan.innerText = "Please enter valid number";
                 errorMessageSpan.style.display = 'inline';
+                isnovalid = false;
             } else {
 
                 errorMessageSpan.style.display = 'none';
+                isnovalid = true;
             }
         }
 
-        function validateAddress(input, fieldName) {
-            var address = input.value.trim();
-            const regex = /^[a-zA-Z0-9\s,.'#/-]*$/; // Regex to allow letters, numbers, spaces, commas, periods, apostrophes, hyphens, forward slashes, and pound signs
-
-            var errorMessageSpan = document.getElementById(${fieldName});
-
+        function validateAddress(input, fieldName)
+        {
+           
+            var address = input.value.trim(); 
+            const regex = /^[a-zA-Z0-9\s,.'#/-]*$/;           
+            var errorMessageSpan = document.getElementById(fieldName);
+        
             if (!regex.test(address)) {
-                // If the address does not match the regex pattern, display an error message
+                
                 errorMessageSpan.innerText = "Please enter a valid address.";
                 errorMessageSpan.style.display = 'inline';
+                addressvalid = false;
+                return false
             } else {
-                // If the address is valid, hide the error message
+               
                 errorMessageSpan.style.display = 'none';
+                addressvalid = true;
             }
         }
 
-        function ValidateName(input)
+        function validateName(input)
         {
             var name = input.value.trim();
-            var errorMessageSpan = document.getElementById("name");
 
-            if (name.length > 50) {
-                errorMessageSpan.innerText = "Please enter name less than 50 charcters";
-            } else if (!/^[a-zA-Z\s]+$/.test(name)) {
-                errorMessageSpan.innerText = "please enter valid name";
+            var errorMessageSpan = document.getElementById("nameError");
+
+            // Regular expression to allow only letters
+            var regex = /^[a-zA-Z\s]*$/;
+
+            if(name==" ")
+            {
+                errorMessageSpan.innerText = "this field is reqired";
+               
+                return false
+
+            }
+           
+            else if (name.length>20)
+            {
+                errorMessageSpan.innerText = "please input name less than 50 characters";
+               
+                return false;
+
+            }
+            else if (!regex.test(name)) {
+                errorMessageSpan.innerText = "Please enter only letters.";
+                errorMessageSpan.style.display = 'inline';
+                isnamevalid = false;
             } else {
                 errorMessageSpan.style.display = 'none';
+                isnamevalid = true;
             }
         }
-       
-            
 
-        $("#saveButton").click(function (e) {
-            e.preventDefault(); // Prevent the default form submission
-            var formValid = true;
+      
+             $("#saveButton").click(function (e) 
+             {
+                e.preventDefault(); // Prevent the default form submission
+                var formValid = true;
+
+           
+
             $("#vendorForm input[type='text'],input[type='email'],input[type='number'],input[type='date'], #vendorForm textarea").each(function () {
                 if ($(this).val().trim() === "") {
                     formValid = false;
@@ -199,47 +231,77 @@
             if (!formValid) {
                 alert("Please fill out all required fields.");
                 return; // Exit the function
-            }  
+            }
 
-            
-            
-            var email = $("#Email").val();
-            var contactNo = $("#ContactNo").val();
+                 if (addressvalid && isnamevalid && isnamevalid) 
+                 {
+                     var email = $("#Email").val();
+                     var contactNo = $("#ContactNo").val();
 
-         
-            $.ajax({
-                url: "@Url.Action("userExists", "Vendor")",
-                type: "GET",
-                data: { email: email, contactNo: contactNo },
-                success: function (response) {
-                    if (response.emailExists) {
-                        alert("Email already exists");
-                    } else if (response.contactNoExists) {
-                        alert("Contact number already exists.");
-                    } else if (!response.emailExists && !response.contactNoExists) {
-                        var formData = $("#vendorForm").serialize();
+                     debugger;
+                     $.ajax
+                         ({
+                             url: "@Url.Action("userExists", "Vendor")",
+                             type: "GET",
+                             data: { email: email, contactNo: contactNo },
+                             success: function (response) {
+                                 console.log(response)
+                                 if (response.emailExists) {
+                                    
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Email already exists',
+                                    icon: 'error'
+                                });
+                                 } else if (response.contactNoExists) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Contact no already exists',
+                                    icon: 'error'
+                                });
+                                     
+                                 } else if (!response.emailExists && !response.contactNoExists) {
+                                     var formData = $("#vendorForm").serialize();
 
-                        var code = $("#code").val();
-                        formData += "&code=" + code;
+                                     var code = $("#code").val();
+                                     formData += "&code=" + code;
+                                    
+                                     $.ajax({
+                                         type: "POST",
+                                         url: "@Url.Action("AddVendor", "Vendor")",
+                                         data: formData,
+                                         success: function (response) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Vendor Added Successfully',
+                                            showConfirmButton: false,
+                                            timer: 2000 // Close the alert after 3 seconds
+                                        }).then(function () {
+                                            // Redirect to the index page or perform any other action
+                                            window.location.href = '/Vendor/GetAllVendor';
+                                        });
+                                            
+                                            
+                                         },
+                                         error: function (xhr, status, error) {
+                                             console.error(error);
+                                         }
+                                     });
+                                 }
+                             },
+                             error: function () {
+                                 // Handle error
+                             }
+                         });
+                 } else 
+                 {
+                 alert('please enter valid input')
+                 }
 
-                        $.ajax({
-                            type: "POST",
-                            url: "@Url.Action("AddVendor", "Vendor")",
-                            data: formData,
-                            success: function (response) {
-                                alert("Vendor added successfully");
-                                window.location.href = "@Url.Action("GetAllVendor", "Vendor")";
-                            },
-                            error: function (xhr, status, error) {
-                                console.error(error);
-                            }
-                        });
-                    }
-                },
-                error: function () {
-                    // Handle error
-                }
-            });
+                 
+           
+               
+          
         });
     </script>
 }

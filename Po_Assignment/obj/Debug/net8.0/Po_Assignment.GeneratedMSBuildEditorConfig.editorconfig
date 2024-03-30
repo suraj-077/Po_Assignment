@@ -1,0 +1,103 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Po_Assignment
+build_property.RootNamespace = Po_Assignment
+build_property.ProjectDir = C:\Users\Suraj.Hirmukhe\Desktop\Po_Assignment\Po_Assignment\Po_Assignment\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Suraj.Hirmukhe\Desktop\Po_Assignment\Po_Assignment\Po_Assignment
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/MaterialEntry/AddMaterial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxFbnRyeVxBZGRNYXRlcmlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/MaterialEntry/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxFbnRyeVxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/MaterialEntry/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxFbnRyeVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/MaterialEntry/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxFbnRyeVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/PoHeader/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9IZWFkZXJcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/PoHeader/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9IZWFkZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/Shared/Error1.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yMS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/Shared/PartialPoDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFBhcnRpYWxQb0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/Vendor/AddVendor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVuZG9yXEFkZFZlbmRvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/Vendor/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVuZG9yXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/Vendor/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVuZG9yXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/Vendor/GetAllVendor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVuZG9yXEdldEFsbFZlbmRvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Suraj.Hirmukhe/Desktop/Po_Assignment/Po_Assignment/Po_Assignment/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-dneyuvude5

@@ -1,0 +1,152 @@
+﻿@model Po_Assignment.Models.MaterialEntry
+
+@{
+    ViewData["Title"] = "Edit Material";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Material</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="mb-0">Edit Material</h5>
+                        <div>
+                            <button id="saveButton" class="btn btn-primary">Save</button>
+                            <a asp-action="Index" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form id="materialForm" asp-action="Edit" method="post" class="form-horizontal">
+                       
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group row">
+                            <label asp-for="Code" class="col-sm-3 col-form-label">Code</label>
+                            <div class="col-sm-4">
+                                <input asp-for="Code" id="code" class="form-control" readonly />
+                                <span asp-validation-for="Code" class="text-danger"></span>
+                            </div>
+                        </div>
+                       
+
+                        <div class="form-group row">
+                            <label asp-for="ShortText" class="col-sm-3 col-form-label">
+                                Short Text
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <input asp-for="ShortText" class="form-control" oninput="ValidateText(this)" type="text" required />
+                                <span asp-validation-for="ShortText" class="text-danger"></span>
+                                <span id="textError" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label asp-for="LongText" class="col-sm-3 col-form-label">
+                                Long Text
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <textarea asp-for="LongText" class="form-control" oninput="ValidateText2(this)" rows="5" type="text" required></textarea>
+                                <span asp-validation-for="LongText" class="text-danger"></span>
+                                <span id="textError2" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label asp-for="Reorder_Level" class="col-sm-3 col-form-label">
+                                Reorder Level
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-sm-4">
+                                <input asp-for="Reorder_Level" class="form-control" type="number" required />
+                                <span asp-validation-for="Reorder_Level" class="text-danger"></span>
+                              
+                            </div>
+                            <label asp-for="Min_Order_Quantity" class="col-sm-3 col-form-label">
+                                Min Order Quantity
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-sm-2">
+                                <input asp-for="Min_Order_Quantity" class="form-control" type="number" required />
+                                <span asp-validation-for="Min_Order_Quantity" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label asp-for="Unit" class="col-sm-3 col-form-label">
+                                Unit
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-sm-4">
+                                <input asp-for="Unit" class="form-control" type="number" required />
+                                <span asp-validation-for="Unit" class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-5 d-flex justify-content-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" asp-for="IsActive" required />
+                                    <label class="form-check-label" asp-for="IsActive"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<script src="~/js/material.js"></script>
+    @* <script src="~/js/material.js"></script> *@
+</body>
+</html>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+   
+    <script>
+
+        var isValid1 = true;
+        var isValid2 = true;
+
+        function ValidateText(input) {
+            var errorMessageSpan = document.getElementById("textError");
+            var text = input.value.trim();
+            var regex = /^[A-Za-z]+$/; // Regular expression to match only characters
+            if (!regex.test(text)) {
+                errorMessageSpan.innerText = "Please enter only characters.";
+                isValid1 = false;
+            } else {
+                errorMessageSpan.innerText = ""; // Clear the error message if input is valid
+                isValid1 = true;
+            }
+        }
+
+        function ValidateText2(input) {
+            var errorMessageSpan = document.getElementById("textError2");
+            var text = input.value.trim();
+            var regex = /^[A-Za-z]+$/; // Regular expression to match only characters
+            if (!regex.test(text)) {
+                errorMessageSpan.innerText = "Please enter only characters.";
+                isValid2 = false;
+            } else {
+                errorMessageSpan.innerText = ""; // Clear the error message if input is valid
+                isValid2 = true;
+            }
+        }
+
+        
+    </script>
+              
+}

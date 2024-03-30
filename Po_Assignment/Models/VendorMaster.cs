@@ -12,7 +12,7 @@ namespace Po_Assignment.Models
 
         public int Id { get; set; }
 
-       
+        [Required]
         [StringLength(5)] 
         public string? Code { get; set; }
 
@@ -30,7 +30,6 @@ namespace Po_Assignment.Models
 
         [Required]
         [StringLength(150)]
-        //[RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]{2,3}$", ErrorMessage = "Please enter a valid email address.")]
         public string? ContactEmail { get; set; }
 
         [Required]
