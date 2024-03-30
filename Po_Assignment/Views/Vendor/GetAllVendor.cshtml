@@ -1,7 +1,21 @@
 ﻿@model IEnumerable<Po_Assignment.Models.VendorMaster>
 
 @{
-    ViewData["Title"] = "AllVendors";
+    ViewData["Title"] = "Vendor List";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <script>
+        alert('@Html.Raw(TempData["ErrorMessage"])');
+    </script>
 }
 
 <style>
@@ -20,7 +34,7 @@
     }
 </style>
 
-<h1>GetAllVendor</h1>
+<h1>Vendor List</h1>
 
 <p>
     <a asp-action="AddVendor" class="btn btn-primary">Add New</a>
@@ -83,8 +97,15 @@
                     @Html.DisplayFor(modelItem => item.IsActive)
                 </td>
                 <td>
-                    <a asp-controller="Vendor" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> 
-                    <a asp-controller="Vendor" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                   <div class="d-flex">
+                    <form asp-controller="Vendor" asp-action="Edit" asp-route-id="@item.Id" method="get" class="mr-2" >
+                            <button type="submit" class="btn btn-primary mr-2">Edit</button>
+                    </form>
+                    &nbsp;&nbsp;
+                    <form asp-controller="Vendor" asp-action="Delete" asp-route-id="@item.Id" method="post">
+                        <button type="submit" class="btn btn-danger ">Delete</button>
+                    </form>
+                    </div>
                 </td>
             </tr>
         }

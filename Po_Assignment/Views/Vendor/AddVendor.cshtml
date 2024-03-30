@@ -1,10 +1,18 @@
 ﻿@model Po_Assignment.Models.VendorMaster
 
 @{
-    ViewData["Title"] = "AddVendor";
+    ViewData["Title"] = "Add Vendor";
 }
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!---->
 
 <!DOCTYPE html>
 <html>
@@ -13,92 +21,226 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container" >
-        <h1>Add Vendor</h1>
-        <hr />
-        <div class="row">
-            <div class="col-md-4">
-                <form asp-action="AddVendor" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Code" class="control-label"></label>
-                        <input asp-for="Code" id="code" class="form-control" readonly />
-                        <span asp-validation-for="Code" class="text-danger"></span>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="mb-0">Add Vendor</h5>
+                        <div>
+                            <button id="saveButton" class="btn btn-primary">Save</button>
+                            <a asp-action="GetAllVendor" class="btn btn-danger">Cancel</a>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="Name" class="form-control" type="text" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="AddressLine1" class="control-label"></label>
-                        <input asp-for="AddressLine1" class="form-control" />
-                        <span asp-validation-for="AddressLine1" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="AddressLine2" class="control-label"></label>
-                        <input asp-for="AddressLine2" class="form-control" />
-                        <span asp-validation-for="AddressLine2" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ContactEmail" class="control-label"></label>
-                        <input asp-for="ContactEmail" class="form-control" type="email" required />
-                        <span asp-validation-for="ContactEmail" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ContactNo" class="control-label"></label>
-                        <input asp-for="ContactNo" id="contact no" class="form-control" type="number" />
-                        <span asp-validation-for="ContactNo" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ValidTillDate" class="control-label"></label>
-                        <input asp-for="ValidTillDate" class="form-control" />
-                        <span asp-validation-for="ValidTillDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="submit" class="btn btn-primary" />
-                    </div>
-                    <div>
-                        <a asp-action="GetAllVendor" class="btn btn-secondary">Back to List</a>
-                    </div>
-                </form>
+                </div>
+                <div class="card-body">
+                    <form id="vendorForm" asp-action="AddVendor" method="post" class="form-horizontal">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <!-- Form fields -->
+                        <div class="form-group row">
+                            <label asp-for="Code" class="col-sm-3 "></label>
+                            <div class="col-sm-4">
+                                <input asp-for="Code" id="code" class="form-control" value="@ViewBag.Code" readonly />
+                                <span asp-validation-for="Code" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Name" class="col-sm-3 col-form-label">
+                                Name
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <input asp-for="Name" class="form-control" id="CheckName" oninput="ValidateName(this)" type="text" required />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <span id="name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label asp-for="AddressLine1" class="col-sm-3 col-form-label">
+                                Address Line 1
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <input asp-for="AddressLine1" id="address" oninput="validateAddress(this," addressLine1Error")" class="form-control" required />
+                                <span id="addressLine1Error" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label asp-for="AddressLine2" class="col-sm-3 col-form-label">
+                                Address Line 2
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <input asp-for="AddressLine2" id="address2" oninput="validateAddress(this,"addressLine2Error") class="form-control" required />
+                                <span id="addressLine2Error" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label asp-for="ContactEmail" class="col-sm-3 col-form-label">
+                                Contact Email
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <input asp-for="ContactEmail" class="form-control" type="email" id="Email" oninput="ValidateEmail()" maxlength="50" required />
+                                <span asp-validation-for="ContactEmail" class="text-danger"></span>
+                                <span id="emailError" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label asp-for="ContactNo" class="col-sm-3 col-form-label">
+                                Contact No
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-sm-4">
+                                <input asp-for="ContactNo"  class="form-control" id="ContactNo" type="text" oninput="validateNo(this)" required />
+                                <span asp-validation-for="ContactNo" class="text-danger"></span>
+                                <span id="ContactNoError" class="text-danger" ></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label asp-for="ValidTillDate" class="col-sm-3 col-form-label">
+                                Valid Till Date
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-sm-4">
+                                <input asp-for="ValidTillDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" required/>
+                                <span asp-validation-for="ValidTillDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-sm-4 d-flex justify-content-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" disabled checked asp-for="IsActive" required />
+                                    <label class="form-check-label" asp-for="IsActive"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-       
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
+	
 </body>
 </html>
 
-
-
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    
-    <script>
-        window.onload = function ()
-        {
-            var uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            var randomLetter = uppercaseLetters.charAt(Math.floor(Math.random() * uppercaseLetters.length));
-            var randomDigits = Math.floor(100 + Math.random() * 900);
-            var generatedCode = randomLetter + '-' + randomDigits;
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+   <script>
 
+        function validateNo(input) {
+            var contactNo = input.value.trim();
+            const regex = /^\d{0,10}$/;
 
-            document.getElementById("code").value = generatedCode;
+            var errorMessageSpan = document.getElementById("ContactNoError");
+
+            if (!regex.test(contactNo)) {
+
+                errorMessageSpan.innerText = "Please enter valid number";
+                errorMessageSpan.style.display = 'inline';
+            } else {
+
+                errorMessageSpan.style.display = 'none';
+            }
         }
 
-    </script>
- 
-    
-}
-    
-}
+        function validateAddress(input, fieldName) {
+            var address = input.value.trim();
+            const regex = /^[a-zA-Z0-9\s,.'#/-]*$/; // Regex to allow letters, numbers, spaces, commas, periods, apostrophes, hyphens, forward slashes, and pound signs
 
+            var errorMessageSpan = document.getElementById(${fieldName});
+
+            if (!regex.test(address)) {
+                // If the address does not match the regex pattern, display an error message
+                errorMessageSpan.innerText = "Please enter a valid address.";
+                errorMessageSpan.style.display = 'inline';
+            } else {
+                // If the address is valid, hide the error message
+                errorMessageSpan.style.display = 'none';
+            }
+        }
+
+        function ValidateName(input)
+        {
+            var name = input.value.trim();
+            var errorMessageSpan = document.getElementById("name");
+
+            if (name.length > 50) {
+                errorMessageSpan.innerText = "Please enter name less than 50 charcters";
+            } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+                errorMessageSpan.innerText = "please enter valid name";
+            } else {
+                errorMessageSpan.style.display = 'none';
+            }
+        }
+       
+            
+
+        $("#saveButton").click(function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            var formValid = true;
+            $("#vendorForm input[type='text'],input[type='email'],input[type='number'],input[type='date'], #vendorForm textarea").each(function () {
+                if ($(this).val().trim() === "") {
+                    formValid = false;
+                    return false;
+                }
+            });
+
+            if (!formValid) {
+                alert("Please fill out all required fields.");
+                return; // Exit the function
+            }  
+
+            
+            
+            var email = $("#Email").val();
+            var contactNo = $("#ContactNo").val();
+
+         
+            $.ajax({
+                url: "@Url.Action("userExists", "Vendor")",
+                type: "GET",
+                data: { email: email, contactNo: contactNo },
+                success: function (response) {
+                    if (response.emailExists) {
+                        alert("Email already exists");
+                    } else if (response.contactNoExists) {
+                        alert("Contact number already exists.");
+                    } else if (!response.emailExists && !response.contactNoExists) {
+                        var formData = $("#vendorForm").serialize();
+
+                        var code = $("#code").val();
+                        formData += "&code=" + code;
+
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("AddVendor", "Vendor")",
+                            data: formData,
+                            success: function (response) {
+                                alert("Vendor added successfully");
+                                window.location.href = "@Url.Action("GetAllVendor", "Vendor")";
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+                    }
+                },
+                error: function () {
+                    // Handle error
+                }
+            });
+        });
+    </script>
+}
 
